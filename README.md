@@ -1,0 +1,2 @@
+# magento2-orderapi
+Export orders via REST API and scheduled cron job based on configurable grand total and date range. Automatically generates Excel files and maintains only the latest 5 exports.
