@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * ManiyaTech
+ *
+ * @author        Milan Maniya
+ * @package       ManiyaTech_OrderApi
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <orderapi>
+            <general>
+                <enabled>1</enabled>
+                <grand_total_threshold>100</grand_total_threshold>
+                <export_days>10</export_days>
+                <order_export_schedule>0 0 * * *</order_export_schedule>
+                <delete_order_export_schedule>0 0 * * 0</delete_order_export_schedule>
+            </general>
+        </orderapi>
+    </default>
+</config>

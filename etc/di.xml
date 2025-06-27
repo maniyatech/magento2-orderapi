@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * ManiyaTech
+ *
+ * @author        Milan Maniya
+ * @package       ManiyaTech_OrderApi
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="ManiyaTech\OrderApi\Api\OrderListInterface" type="ManiyaTech\OrderApi\Model\OrderList" />
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="orderlist" xsi:type="object">ManiyaTech\OrderApi\Console\Command\OrderListCommand</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * ManiyaTech
+ *
+ * @author        Milan Maniya
+ * @package       ManiyaTech_OrderApi
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/crontab.xsd">
+    <group id="default">
+        <job name="export_orders_to_excel" instance="ManiyaTech\OrderApi\Cron\Orders" method="exportOrders">
+            <config_path>orderapi/general/order_export_schedule</config_path>
+        </job>
+        <job name="delete_export_files" instance="ManiyaTech\OrderApi\Cron\Orders" method="deleteOldFiles">
+            <config_path>orderapi/general/delete_order_export_schedule</config_path>
+        </job>
+    </group>
+</config>

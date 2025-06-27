@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * ManiyaTech
+ *
+ * @author        Milan Maniya
+ * @package       ManiyaTech_OrderApi
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+    	<add id="ManiyaTech_OrderApi::main" title="Order API" translate="Order API" module="ManiyaTech_OrderApi" parent="ManiyaTech_Core::core" sortOrder="120" resource="ManiyaTech_OrderApi::main" dependsOnConfig="ordcomments/general/enabled"/>
+
+        <add id="ManiyaTech_OrderApi::configuration_menu" title="Configurations" module="ManiyaTech_OrderApi" parent="ManiyaTech_OrderApi::main" sortOrder="20" action="admin/system_config/edit/section/orderapi" resource="ManiyaTech_OrderApi::configuration_menu" target="_blank"/>
+    </menu>
+</config>

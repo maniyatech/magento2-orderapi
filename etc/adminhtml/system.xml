@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * ManiyaTech
+ *
+ * @author        Milan Maniya
+ * @package       ManiyaTech_OrderApi
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="orderapi" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+            <tab>maniyatech</tab>
+            <label>Order API</label>
+            <resource>ManiyaTech_OrderApi::orderapiconfig</resource>
+            <group id="general" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Settings</label>
+                <field id="enabled" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Module</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="grand_total_threshold" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Grand Total Threshold</label>
+                    <depends><field id="enabled">1</field></depends>
+                    <validate>required-entry validate-number</validate>
+                    <comment><![CDATA[Only export orders with Grand Total greater than this value.]]></comment>
+                </field>
+                <field id="export_days" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Export Orders From Last (Days)</label>
+                    <depends><field id="enabled">1</field></depends>
+                    <source_model>ManiyaTech\OrderApi\Model\Config\Source\ExportDays</source_model>
+                    <comment><![CDATA[Choose how many days back to export orders (e.g., 7 = from today to last 7 days).]]></comment>
+                </field>
+                <field id="order_export_schedule" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Scheduled Order Export</label>
+                    <depends><field id="enabled">1</field></depends>
+                    <source_model>ManiyaTech\OrderApi\Model\Config\Source\OrderExportSchedule</source_model>
+                    <comment><![CDATA[Order Export File Generation in <b>var/exportorder</b> directory.]]></comment>
+                </field>
+                <field id="delete_order_export_schedule" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Scheduled Cleanup of Order Export Files</label>
+                    <depends><field id="enabled">1</field></depends>
+                    <source_model>ManiyaTech\OrderApi\Model\Config\Source\DeleteExportFile</source_model>
+                    <comment><![CDATA[Automatic Deletion of Old Order Export Files, <b>Retaining Latest 5</b>]]></comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
