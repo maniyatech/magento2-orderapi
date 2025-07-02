@@ -23,6 +23,12 @@ class OrderList implements OrderListInterface
     public const XML_PATH_MODULE_ENABLED  = 'orderapi/general/enabled';
     public const XML_PATH_GRAND_TOTAL     = 'orderapi/general/grand_total_threshold';
     public const XML_PATH_EXPORT_DAYS     = 'orderapi/general/export_days';
+    public const XML_PATH_ENABLE_ORDER_REPORT = 'orderapi/general/enabled_order_report';
+    public const XML_PATH_EMAIL_SENDER    = 'orderapi/general/sender';
+    public const XML_PATH_EMAIL_TO_NAME   = 'orderapi/general/to_name';
+    public const XML_PATH_EMAIL_TO        = 'orderapi/general/to';
+    public const XML_PATH_EMAIL_BCC       = 'orderapi/general/bcc';
+    public const XML_PATH_EMAIL_TEMPLATE  = 'orderapi/general/template';
 
     /**
      * @var CollectionFactory
@@ -175,5 +181,26 @@ class OrderList implements OrderListInterface
         }
 
         return $orders;
+    }
+
+    /**
+     * Generate dynamic email subject for the order report.
+     *
+     * @return string
+     */
+    public function getReportEmailTitle()
+    {
+        $grandTotalThreshold = (float) $this->getConfigValue(self::XML_PATH_GRAND_TOTAL);
+        $days = (int) $this->getConfigValue(self::XML_PATH_EXPORT_DAYS);
+
+        $toDate = $this->timezone->date()->format('Y-m-d H:i:s');
+        $fromDate = $this->timezone->date(new \DateTime("-{$days} days"))
+            ->setTime(0, 0, 0)
+            ->format('Y-m-d H:i:s');
+
+        $fromFormatted = $this->timezone->date(new \DateTime($fromDate))->format('M d, Y');
+        $toFormatted = $this->timezone->date(new \DateTime($toDate))->format('M d, Y');
+
+        return __('Order Report Between %1 - %2', $fromFormatted, $toFormatted);
     }
 }

@@ -1,0 +1,23 @@
+<!--
+/**
+ * ManiyaTech
+ *
+ * @author        Milan Maniya
+ * @package       ManiyaTech_OrderApi
+ */
+-->
+
+<!--@subject {{var dynamic_subject}} @-->
+<!--@vars
+{"var receivername":"Receiver Name", "var dynamic_subject":"Email Subject"}
+@-->
+{{template config_path="design/email/header_template"}}
+<table>
+    <tr>
+        <td>
+            <p>Hello <strong>{{var receivername}}</strong>,</p>
+            <p>Please find attached the latest order report.</p>
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

@@ -18,6 +18,9 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use ManiyaTech\OrderApi\Model\OrderList;
+use Magento\Framework\Mail\Template\TransportBuilder;
+use Magento\Framework\Translate\Inline\StateInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 class Orders
 {
@@ -42,23 +45,47 @@ class Orders
     private FileDriver $fileDriver;
 
     /**
+     * @var TransportBuilder
+     */
+    private TransportBuilder $transportBuilder;
+
+    /**
+     * @var StateInterface
+     */
+    private StateInterface $inlineTranslation;
+
+    /**
+     * @var StoreManagerInterface
+     */
+    private StoreManagerInterface $storeManagerInterface;
+
+    /**
      * Orders constructor.
      *
      * @param OrderList $orderList
      * @param DirectoryList $directoryList
      * @param LoggerInterface $logger
      * @param FileDriver $fileDriver
+     * @param TransportBuilder $transportBuilder
+     * @param StateInterface $inlineTranslation
+     * @param StoreManagerInterface $storeManagerInterface
      */
     public function __construct(
         OrderList $orderList,
         DirectoryList $directoryList,
         LoggerInterface $logger,
-        FileDriver $fileDriver
+        FileDriver $fileDriver,
+        TransportBuilder $transportBuilder,
+        StateInterface $inlineTranslation,
+        StoreManagerInterface $storeManagerInterface
     ) {
         $this->orderList = $orderList;
         $this->directoryList = $directoryList;
         $this->logger = $logger;
         $this->fileDriver = $fileDriver;
+        $this->transportBuilder = $transportBuilder;
+        $this->inlineTranslation = $inlineTranslation;
+        $this->storeManagerInterface = $storeManagerInterface;
     }
 
     /**
@@ -83,8 +110,6 @@ class Orders
 
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
-
-            // Set headers
             $headers = [
                 'Increment ID', 'Billing Name', 'Grand Total', 'Status', 'Order Date',
                 'Payment Title', 'Shipping Method', 'Shipping Description',
@@ -100,7 +125,6 @@ class Orders
                 $sheet->getColumnDimension($columnLetter)->setAutoSize(true);
             }
 
-            // Fill order data
             $row = 2;
             foreach ($orders as $order) {
                 $sheet->fromArray([
@@ -119,19 +143,78 @@ class Orders
             }
 
             $exportDir = $this->directoryList->getPath(DirectoryList::VAR_DIR) . '/exportorder';
-
             if (!$this->fileDriver->isDirectory($exportDir)) {
                 $this->fileDriver->createDirectory($exportDir, 0775);
             }
 
             $fileName = $exportDir . '/order_export_' . date('d-m-Y_h:i_A') . '.xlsx';
-            $writer = new Xlsx($spreadsheet);
-            $writer->save($fileName);
+            (new Xlsx($spreadsheet))->save($fileName);
+
+            if ($this->orderList->getConfigValue(OrderList::XML_PATH_ENABLE_ORDER_REPORT)) {
+                $senderCode = $this->orderList->getConfigValue(OrderList::XML_PATH_EMAIL_SENDER);
+                $sender = $this->getSenderDetails($senderCode);
+                $to = $this->orderList->getConfigValue(OrderList::XML_PATH_EMAIL_TO);
+                $receivername = $this->orderList->getConfigValue(OrderList::XML_PATH_EMAIL_TO_NAME);
+                $bcc = $this->orderList->getConfigValue(OrderList::XML_PATH_EMAIL_BCC);
+                $template = $this->orderList->getConfigValue(OrderList::XML_PATH_EMAIL_TEMPLATE);
+                $subject = (string) $this->orderList->getReportEmailTitle();
+
+                $toEmails = array_filter(array_map('trim', explode(',', $to)));
+                $bccEmails = array_filter(array_map('trim', explode(',', $bcc)));
+
+                $storeId = $this->storeManagerInterface->getStore()->getId();
+
+                $this->inlineTranslation->suspend();
+                $this->transportBuilder
+                    ->setTemplateIdentifier($template)
+                    ->setTemplateOptions([
+                        'area' => \Magento\Framework\App\Area::AREA_FRONTEND,
+                        'store' => $storeId
+                    ])
+                    ->setTemplateVars([
+                        'dynamic_subject' => $subject,
+                        'receivername' => $receivername
+                    ])
+                    ->setFrom($sender)
+                    ->addTo($toEmails)
+                    ->addAttachment(
+                        $this->fileDriver->fileGetContents($fileName),
+                        // phpcs:ignore Magento2.Functions.DiscouragedFunction
+                        basename($fileName),
+                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    );
+
+                if (!empty($bccEmails)) {
+                    $this->transportBuilder->addBcc($bccEmails);
+                }
+
+                $transport = $this->transportBuilder->getTransport();
+                $transport->sendMessage();
+                $this->inlineTranslation->resume();
+            }
 
             $this->logger->info(__('Order export completed: %1', $fileName));
         } catch (\Throwable $e) {
             $this->logger->error(__('ExportOrders Cron Error: %1', $e->getMessage()));
         }
+    }
+
+    /**
+     * Email Sender Details.
+     *
+     * @param string $senderCode
+     *
+     * @return array
+     */
+
+    public function getSenderDetails(string $senderCode): array
+    {
+        $namePath = 'trans_email/ident_' . $senderCode . '/name';
+        $emailPath = 'trans_email/ident_' . $senderCode . '/email';
+        return [
+            'name' => $this->orderList->getConfigValue($namePath),
+            'email' => $this->orderList->getConfigValue($emailPath),
+        ];
     }
 
     /**
@@ -150,17 +233,13 @@ class Orders
             $pattern = $directory . '/order_export_*.xlsx';
             $files = Glob::glob($pattern);
 
-            usort($files, function ($a, $b) {
-                return $this->fileDriver->stat($b)['mtime'] <=> $this->fileDriver->stat($a)['mtime'];
-            });
+            usort($files, fn($a, $b) => $this->fileDriver->stat($b)['mtime'] <=> $this->fileDriver->stat($a)['mtime']);
 
-            $oldFiles = array_slice($files, 5); // Keep 5 latest
-
-            foreach ($oldFiles as $file) {
+            foreach (array_slice($files, 5) as $file) {
                 if ($this->fileDriver->isFile($file)) {
                     $this->fileDriver->deleteFile($file);
-                    $filename = (new \SplFileInfo($file))->getFilename();
-                    $this->logger->info(__('Deleted old export file: %1', $filename));
+                    // phpcs:ignore Magento2.Functions.DiscouragedFunction
+                    $this->logger->info(__('Deleted old export file: %1', basename($file)));
                 }
             }
         } catch (\Throwable $e) {

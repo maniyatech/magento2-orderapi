@@ -44,6 +44,45 @@
                     <source_model>ManiyaTech\OrderApi\Model\Config\Source\DeleteExportFile</source_model>
                     <comment><![CDATA[Automatic Deletion of Old Order Export Files, <b>Retaining Latest 5</b>]]></comment>
                 </field>
+                <field id="enabled_order_report" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Order Report Email Attachment via Cron</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="sender" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sender</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                    <depends>
+                        <field id="enabled_order_report">1</field>
+                    </depends>
+                </field>
+                <field id="to_name" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Receiver Name</label>
+                    <depends><field id="enabled_order_report">1</field></depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="to" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>To Email</label>
+                    <validate>validate-emails required-entry</validate>
+                    <comment>Comma-separated.</comment>
+                    <depends>
+                        <field id="enabled_order_report">1</field>
+                    </depends>
+                </field>
+                <field id="bcc" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Bcc Email(s)</label>
+                    <validate>validate-emails</validate>
+                    <comment>Comma-separated.</comment>
+                    <depends>
+                        <field id="enabled_order_report">1</field>
+                    </depends>
+                </field>
+                <field id="template" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="enabled_order_report">1</field>
+                    </depends>
+                </field>
             </group>
         </section>
     </system>

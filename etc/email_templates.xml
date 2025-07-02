@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * ManiyaTech
+ *
+ * @author        Milan Maniya
+ * @package       ManiyaTech_OrderApi
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="orderapi_general_template" label="Order Report With Attachment" file="order_report.html" type="html" module="ManiyaTech_OrderApi" area="frontend"/>
+</config>

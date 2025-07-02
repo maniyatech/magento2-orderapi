@@ -17,6 +17,12 @@
                 <export_days>10</export_days>
                 <order_export_schedule>0 0 * * *</order_export_schedule>
                 <delete_order_export_schedule>0 0 * * 0</delete_order_export_schedule>
+                <enabled_order_report>0</enabled_order_report>
+                <sender>general</sender>
+                <to_name>Admin</to_name>
+                <to></to>
+                <bcc></bcc>
+                <template>orderapi_general_template</template>
             </general>
         </orderapi>
     </default>

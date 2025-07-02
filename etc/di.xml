@@ -8,11 +8,9 @@
  */
 -->
 
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="ManiyaTech\OrderApi\Api\OrderListInterface" type="ManiyaTech\OrderApi\Model\OrderList" />
-
+    <preference for="Magento\Framework\Mail\Template\TransportBuilder" type="ManiyaTech\OrderApi\Mail\Template\TransportBuilder"/>
     <type name="Magento\Framework\Console\CommandList">
         <arguments>
             <argument name="commands" xsi:type="array">
