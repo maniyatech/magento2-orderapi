@@ -15,6 +15,12 @@ This is especially useful for admins who need regular exports for reporting, ana
 	<li>🛡️ Magento Standards Compliant: Follows Magento 2.4.X and PHP 8.4 best practices with PSR & PHPCS compatibility.</li>
 	<li>⚙️ Admin Configurable: Enable/disable module, define export filters, and cron frequency from the backend.</li>
 	<li>🕒 Timezone Aware: Date range filters work according to store timezone settings.</li>
+	<li>📩 Automated Email Delivery: Sends the order report automatically via a scheduled cron job — no manual intervention required.</li>
+	<li>📎 Order Report Attachment: Attaches the latest order report (Excel) directly to the email.</li>
+	<li>⚙️ Magento Email Template Integration: Fully supports dynamic email templates with variables like subject and receiver name.</li>
+	<li>🧩 Customizable Configuration: Easily configurable via Magento admin (subject line, recipients, etc.).</li>
+	<li>🛡️ Secure File Handling: Uses Magento’s filesystem and mail transport classes for secure and reliable file delivery.</li>
+	<li>🔄 Supports Magento 2.4.8: Fully tested and compatible with Magento 2.4.8.</li>
 </ul>
 
 ## How to install ManiyaTech_OrderApi module
