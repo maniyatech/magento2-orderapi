@@ -10,12 +10,16 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <section id="orderapi" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+        <section id="orderapi" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="1">
             <tab>maniyatech</tab>
             <label>Order API</label>
             <resource>ManiyaTech_OrderApi::orderapiconfig</resource>
             <group id="general" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General Settings</label>
+                <field id="ManiyaTech_OrderApi" translate="label" type="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Composer Version</label>
+                    <frontend_model>ManiyaTech\Core\Block\Adminhtml\System\Config\Composer\Version</frontend_model>
+                </field>
                 <field id="enabled" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable Module</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
