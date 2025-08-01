@@ -5,18 +5,18 @@ The <b>Order API & Scheduled Export</b> module by <b>ManiyaTech</b> empowers Mag
 ### Key Features
 
 <ul>
-	<li>✅ **REST API Support** : Retrieve a filtered list of orders using a custom REST endpoint.</li>
-	<li>🔧 **Dynamic Filters**  : Admin-configurable filters for grand total and date range (past N days).</li>
-	<li>📅 **Automated Cron Export**  : Scheduled order export jobs that generate Excel/CSV files and email them.</li>
-	<li>📎 **Email Attachment Support**  : Exported files are automatically attached to emails based on schedule.</li>
-	<li>📧 **Email Template Integration**  : Magento-compatible templates with dynamic fields (subject, receiver name, etc.).</li>
-	<li>⚙️ **Admin Field Configuration**  : Define which order fields to export - includes custom attribute mapping.</li>
-	<li>🧹 **Auto File Cleanup**  : Keeps only the 5 latest exports to save disk space.</li>
-	<li>📂 **Multiple File Format Support**  : Choose between XLSX or CSV formats.</li>
-	<li>📈 **Formatted Excel Output**  : Professionally formatted spreadsheets for reporting/analysis.</li>
-	<li>🌐 **Timezone Aware Filtering**  : Date range filters work according to your Magento store's timezone.</li>
-	<li>🔐 **Secure File Delivery**  : Uses Magento's built-in filesystem and email transport layers.</li>
-	<li>🔄 **Magento 2.4.8 Compatible**  : Fully tested with Magento 2.4.8 and PHP 8.4.</li>
+	<li>✅ <b>REST API Support</b> : Retrieve a filtered list of orders using a custom REST endpoint.</li>
+	<li>🔧 <b>Dynamic Filters</b>  : Admin-configurable filters for grand total and date range (past N days).</li>
+	<li>📅 <b>Automated Cron Export</b>  : Scheduled order export jobs that generate Excel/CSV files and email them.</li>
+	<li>📎 <b>Email Attachment Support</b>  : Exported files are automatically attached to emails based on schedule.</li>
+	<li>📧 <b>Email Template Integration</b>  : Magento-compatible templates with dynamic fields (subject, receiver name, etc.).</li>
+	<li>⚙️ <b>Admin Field Configuration</b>  : Define which order fields to export - includes custom attribute mapping.</li>
+	<li>🧹 <b>Auto File Cleanup</b>  : Keeps only the 5 latest exports to save disk space.</li>
+	<li>📂 <b>Multiple File Format Support</b>  : Choose between XLSX or CSV formats.</li>
+	<li>📈 <b>Formatted Excel Output</b>  : Professionally formatted spreadsheets for reporting/analysis.</li>
+	<li>🌐 <b>Timezone Aware Filtering</b>  : Date range filters work according to your Magento store's timezone.</li>
+	<li>🔐 <b>Secure File Delivery</b>  : Uses Magento's built-in filesystem and email transport layers.</li>
+	<li>🔄 <b>Magento 2.4.8 Compatible</b>  : Fully tested with Magento 2.4.8 and PHP 8.4.</li>
 </ul>
 
 ## How to install ManiyaTech_OrderApi module
