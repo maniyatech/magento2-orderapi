@@ -14,7 +14,8 @@
             <resource id="Magento_Backend::admin">
                 <resource id="ManiyaTech_Core::core">
                     <resource id="ManiyaTech_OrderApi::main" title="Order API Settings" translate="title" sortOrder="170">
-                        <resource id="ManiyaTech_OrderApi::configuration_menu" title="Configurations" translate="title" sortOrder="10"/>
+                        <resource id="ManiyaTech_OrderApi::mass_export" title="Mass Export" translate="title" sortOrder="10"/>
+                        <resource id="ManiyaTech_OrderApi::configuration_menu" title="Configurations" translate="title" sortOrder="20"/>
                     </resource>
                 </resource>
                 <resource id="Magento_Backend::stores">

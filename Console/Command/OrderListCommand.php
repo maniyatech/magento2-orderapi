@@ -89,17 +89,70 @@ class OrderListCommand extends Command
             return Command::SUCCESS;
         }
 
+        $selectedOrderFields = $this->orderList->getSelectedOrderFields();
+        $defaultOrderFields = $this->orderList->getDefaultOrderFields();
+        $finalFields = $selectedOrderFields ?: $defaultOrderFields;
+        
         foreach ($orders as $order) {
-            $output->writeln(str_repeat('-', 50));
-            $output->writeln("Order ID       : {$order['increment_id']}");
-            $output->writeln("Customer Name  : " . ($order['billing_name'] ?? 'N/A'));
-            $output->writeln("Total Amount   : {$order['grand_total']}");
-            $output->writeln("Status         : " . ($order['order_status'] ?? 'N/A'));
-            $output->writeln("Date           : " . ($order['order_date'] ?? 'N/A'));
-            $output->writeln("Payment Method : " . ($order['payment_title'] ?? $order['payment_method'] ?? 'N/A'));
-            $output->writeln("Shipping Desc  : " . ($order['shipping_description'] ?? 'N/A'));
-            $output->writeln("Shipping Amt   : " . ($order['shipping_amount'] ?? '0'));
-            $output->writeln("Shipping Incl  : " . ($order['shipping_incl_tax'] ?? '0'));
+            $output->writeln(str_repeat('-', 100));
+            foreach ($finalFields as $field) {
+                $code = $field['order_code'];
+                $value = $order->getData($code) ?? '';
+                $lable = $field['order_title'];
+                switch ($code) {
+                    case 'status':
+                        $value = ucfirst((string) $value);
+                        $output->writeln("$lable  : {$value}");
+                        break;
+
+                    case 'created_at':
+                    case 'updated_at':
+                        $value = $value ? date('d-m-Y', strtotime((string) $value)) : '';
+                        $output->writeln("$lable  : {$value}");
+                        break;
+
+                    case 'customer_firstname':
+                        $firstname = $order->getData('customer_firstname') ?? '';
+                        $lastname = $order->getData('customer_lastname') ?? '';
+                        $value = trim($firstname . ' ' . $lastname);
+                        $output->writeln("$lable  : {$value}");
+                        break;
+
+                    case 'customer_group_id':
+                        $groupId = $order->getData('customer_group_id');
+                        $value = $this->orderList->getCustomerGroupName((int) $groupId);
+                        $output->writeln("$lable  : {$value}");
+                        break;
+
+                    case 'shipping_amount':
+                    case 'shipping_incl_tax':
+                    case 'shipping_tax_amount':
+                    case 'subtotal':
+                    case 'discount_amount':
+                    case 'grand_total':
+                    case 'base_grand_total':
+                    case 'tax_amount':
+                    case 'total_due':
+                        $value = $this->orderList->getFormattedPrice((float) $value, $order->getOrderCurrencyCode());
+                        $output->writeln("$lable  : {$value}");
+                        break;
+
+                    case 'billing_address_id':
+                        $value = $this->orderList->formatAddress($order->getBillingAddress());
+                        $output->writeln("$lable  : {$value}");
+                        break;
+
+                    case 'shipping_address_id':
+                        $value = $this->orderList->formatAddress($order->getShippingAddress());
+                        $output->writeln("$lable  : {$value}");
+                        break;
+
+                    default:
+                        $value = (string) $value;
+                        $output->writeln("$lable  : {$value}");
+                        break;
+                }
+            }
         }
 
         return Command::SUCCESS;

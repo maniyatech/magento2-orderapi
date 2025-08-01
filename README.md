@@ -1,26 +1,22 @@
 # ManiyaTech OrderApi module for Magento 2
 
-The Order API & Scheduled Export module by ManiyaTech allows merchants to access and export order data efficiently using configurable filters. You can retrieve orders via REST API based on a minimum grand total and a selected date range. In addition, a cron job can be scheduled to automatically export orders to Excel format and store them in the var/exportorder/ directory. The module keeps only the latest 5 export files, ensuring disk space optimization.
-
-This is especially useful for admins who need regular exports for reporting, analysis, or integration with third-party systems.
+The <b>Order API & Scheduled Export</b> module by <b>ManiyaTech</b> empowers Magento 2 store admins to efficiently <b>retrieve and export sales orders</b> using flexible filters. Orders can be pulled via a custom <b>REST API</b> or automatically exported via cron in either <b>CSV or XLSX</b> format. Files are saved in the var/exportorder/ directory, and <b>only the latest 5 files are retained</b> to optimize disk usage.
 
 ### Key Features
 
 <ul>
-	<li>✅ REST API Support: Fetch filtered order list using custom API endpoint.</li>
-	<li>🔧 Configurable Filters: Set minimum grand total and number of past days for export.</li>
-	<li>📅 Scheduled Export via Cron: Automatically generate Excel files on a defined schedule.</li>
-	<li>📂 Auto Cleanup: Keeps only the 5 most recent export files; older files are automatically deleted.</li>
-	<li>📈 Formatted Excel Output: Generates well-structured spreadsheets with all key order fields.</li>
-	<li>🛡️ Magento Standards Compliant: Follows Magento 2.4.X and PHP 8.4 best practices with PSR & PHPCS compatibility.</li>
-	<li>⚙️ Admin Configurable: Enable/disable module, define export filters, and cron frequency from the backend.</li>
-	<li>🕒 Timezone Aware: Date range filters work according to store timezone settings.</li>
-	<li>📩 Automated Email Delivery: Sends the order report automatically via a scheduled cron job — no manual intervention required.</li>
-	<li>📎 Order Report Attachment: Attaches the latest order report (Excel) directly to the email.</li>
-	<li>⚙️ Magento Email Template Integration: Fully supports dynamic email templates with variables like subject and receiver name.</li>
-	<li>🧩 Customizable Configuration: Easily configurable via Magento admin (subject line, recipients, etc.).</li>
-	<li>🛡️ Secure File Handling: Uses Magento’s filesystem and mail transport classes for secure and reliable file delivery.</li>
-	<li>🔄 Supports Magento 2.4.8: Fully tested and compatible with Magento 2.4.8.</li>
+	<li>✅ **REST API Support** : Retrieve a filtered list of orders using a custom REST endpoint.</li>
+	<li>🔧 **Dynamic Filters**  : Admin-configurable filters for grand total and date range (past N days).</li>
+	<li>📅 **Automated Cron Export**  : Scheduled order export jobs that generate Excel/CSV files and email them.</li>
+	<li>📎 **Email Attachment Support**  : Exported files are automatically attached to emails based on schedule.</li>
+	<li>📧 **Email Template Integration**  : Magento-compatible templates with dynamic fields (subject, receiver name, etc.).</li>
+	<li>⚙️ **Admin Field Configuration**  : Define which order fields to export - includes custom attribute mapping.</li>
+	<li>🧹 **Auto File Cleanup**  : Keeps only the 5 latest exports to save disk space.</li>
+	<li>📂 **Multiple File Format Support**  : Choose between XLSX or CSV formats.</li>
+	<li>📈 **Formatted Excel Output**  : Professionally formatted spreadsheets for reporting/analysis.</li>
+	<li>🌐 **Timezone Aware Filtering**  : Date range filters work according to your Magento store's timezone.</li>
+	<li>🔐 **Secure File Delivery**  : Uses Magento's built-in filesystem and email transport layers.</li>
+	<li>🔄 **Magento 2.4.8 Compatible**  : Fully tested with Magento 2.4.8 and PHP 8.4.</li>
 </ul>
 
 ## How to install ManiyaTech_OrderApi module

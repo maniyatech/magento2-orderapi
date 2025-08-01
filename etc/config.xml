@@ -17,13 +17,87 @@
                 <export_days>10</export_days>
                 <order_export_schedule>0 0 * * *</order_export_schedule>
                 <delete_order_export_schedule>0 0 * * 0</delete_order_export_schedule>
-                <enabled_order_report>0</enabled_order_report>
+                <file_format>xlsx</file_format>
+            </general>
+            <order_export_settings>
+                <enable_export_order>1</enable_export_order>
+                <save_file>0</save_file>
+                <email_attachment>0</email_attachment>
+                <export_fields>
+                    <item1>
+                        <order_code>increment_id</order_code>
+                        <order_title>Increment ID</order_title>
+                    </item1>
+                    <item2>
+                        <order_code>status</order_code>
+                        <order_title>Order Status</order_title>
+                    </item2>
+                    <item3>
+                        <order_code>created_at</order_code>
+                        <order_title>Order Date</order_title>
+                    </item3>
+                    <item4>
+                        <order_code>customer_firstname</order_code>
+                        <order_title>Customer Name</order_title>
+                    </item4>
+                    <item5>
+                        <order_code>customer_email</order_code>
+                        <order_title>Customer Email</order_title>
+                    </item5>
+                    <item6>
+                        <order_code>customer_group_id</order_code>
+                        <order_title>Customer Group</order_title>
+                    </item6>
+                    <item7>
+                        <order_code>shipping_method</order_code>
+                        <order_title>Shipping Method</order_title>
+                    </item7>
+                    <item8>
+                        <order_code>shipping_description</order_code>
+                        <order_title>Shipping Description</order_title>
+                    </item8>
+                    <item9>
+                        <order_code>shipping_amount</order_code>
+                        <order_title>Shipping Amount</order_title>
+                    </item9>
+                    <item10>
+                        <order_code>shipping_incl_tax</order_code>
+                        <order_title>Shipping Incl. Tax</order_title>
+                    </item10>
+                    <item11>
+                        <order_code>subtotal</order_code>
+                        <order_title>Subtotal</order_title>
+                    </item11>
+                    <item12>
+                        <order_code>grand_total</order_code>
+                        <order_title>Grand Total</order_title>
+                    </item12>
+                    <item13>
+                        <order_code>total_item_count</order_code>
+                        <order_title>Total Item Count</order_title>
+                    </item13>
+                    <item14>
+                        <order_code>total_qty_ordered</order_code>
+                        <order_title>Total Qty Ordered</order_title>
+                    </item14>
+                    <item15>
+                        <order_code>billing_address_id</order_code>
+                        <order_title>Billing Address</order_title>
+                    </item15>
+                    <item16>
+                        <order_code>shipping_address_id</order_code>
+                        <order_title>Shipping Address</order_title>
+                    </item16>
+                </export_fields>
+            </order_export_settings>
+            <email_settings>
+                <enabled_order_report>1</enabled_order_report>
                 <sender>general</sender>
                 <to_name>Admin</to_name>
                 <to></to>
                 <bcc></bcc>
-                <template>orderapi_general_template</template>
-            </general>
+                <template>orderapi_email_settings_template</template>
+            </email_settings>
         </orderapi>
     </default>
 </config>
